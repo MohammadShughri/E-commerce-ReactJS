@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 // import Navbar from './components/Navbar/Navbar';
 // Rather than importing the specific location of the file we can import the methods that we need directly
 
-import { Products, Navbar } from "./components";
+import { Products, Navbar, Cart } from "./components";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -38,7 +38,8 @@ const App = () => {
   return (
     <div>
       <Navbar totalItems={cart.total_Items} />
-      <Products products={products} onAddToCart={addToCartHandler} />
+      {/* <Products products={products} onAddToCart={addToCartHandler} /> */}
+      <Cart cart={cart} />
     </div>
   );
 };
