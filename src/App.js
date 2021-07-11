@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // import Navbar from './components/Navbar/Navbar';
 // Rather than importing the specific location of the file we can import the methods that we need directly
 
-import { Products, Navbar, Cart } from "./components";
+import { Products, Navbar, Cart, Checkout } from "./components";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -69,6 +69,9 @@ const App = () => {
               removeFromCartHandler={removeFromCartHandler}
               emptyCartHandler={emptyCartHandler}
             />
+          </Route>
+          <Route exact path="/checkout">
+            <Checkout />
           </Route>
         </Switch>
       </div>
