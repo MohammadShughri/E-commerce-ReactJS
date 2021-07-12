@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Products, Navbar, Cart, Checkout } from "./components";
 
 const App = () => {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
   const [order, setOrder] = useState({});
@@ -73,13 +74,17 @@ const App = () => {
     fetchProducts();
     fetchCart();
   }, []);
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
   //console.log(products);
   console.log(cart);
   return (
     <Router>
       <div>
-        <Navbar totalItems={cart.total_Items} />
+        <Navbar
+          totalItems={cart.total_items}
+          handleDrawerToggle={handleDrawerToggle}
+        />
         <Switch>
           <Route exact path="/">
             <Products products={products} onAddToCart={addToCartHandler} />
