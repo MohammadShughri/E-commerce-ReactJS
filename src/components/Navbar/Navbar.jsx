@@ -15,6 +15,7 @@ import useStyles from "./styles";
 const Navbar = ({ totalItems }) => {
   const classes = useStyles();
   const location = useLocation();
+  console.log(totalItems);
 
   return (
     <AppBar position="fixed" className={classes.AppBar} color="inherit">
@@ -28,11 +29,11 @@ const Navbar = ({ totalItems }) => {
         >
           <img
             src={logo}
-            alt="Commerce.js"
-            height="25px"
+            alt="E-Commerce"
+            height="26px"
             className={classes.image}
           />
-          Commerce.js
+          E-Commerce
         </Typography>
         <div className={classes.grow} />
         {location.pathname === "/" && (
