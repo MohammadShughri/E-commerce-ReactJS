@@ -12,6 +12,8 @@ import { Products, Navbar, Cart, Checkout } from "./components";
 const App = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
+  const [order, setOrder] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
 
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();
@@ -29,22 +31,42 @@ const App = () => {
     setCart(cart);
   };
 
-  const updateCartHandler = async (productId, quantity) => {
-    const { cart } = await commerce.cart.update(productId, { quantity });
+  const updateCartHandler = async (lineItemId, quantity) => {
+    const response = await commerce.cart.update(lineItemId, { quantity });
 
-    setCart(cart);
+    setCart(response.cart);
   };
 
-  const removeFromCartHandler = async (productId) => {
-    const { cart } = await commerce.cart.remove(productId);
+  const removeFromCartHandler = async (lineItemId) => {
+    const response = await commerce.cart.remove(lineItemId);
 
-    setCart(cart);
+    setCart(response.cart);
   };
 
-  const emptyCartHandler = async (productId) => {
-    const { cart } = await commerce.cart.empty();
+  const emptyCartHandler = async () => {
+    const response = await commerce.cart.empty();
 
-    setCart(cart);
+    setCart(response.cart);
+  };
+
+  const refreshCart = async () => {
+    const newCart = await commerce.cart.refresh();
+
+    setCart(newCart);
+  };
+
+  const captureCheckoutHandler = async (checkoutTokenId, newOrder) => {
+    try {
+      const incomingOrder = await commerce.checkout.capture(
+        checkoutTokenId,
+        newOrder
+      );
+
+      setOrder(incomingOrder);
+      refreshCart();
+    } catch (error) {
+      setErrorMessage(error.data.error.message);
+    }
   };
 
   useEffect(() => {
@@ -71,7 +93,12 @@ const App = () => {
             />
           </Route>
           <Route exact path="/checkout">
-            <Checkout cart={cart}/>
+            <Checkout
+              cart={cart}
+              order={order}
+              onCaptureCheckout={captureCheckoutHandler}
+              error={errorMessage}
+            />
           </Route>
         </Switch>
       </div>
