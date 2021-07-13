@@ -12,6 +12,25 @@ Checkout the preview of the website [here.](https://reactjsecommerce.netlify.app
 
 - [Commerce.js API](https://commercejs.com/docs/api/#introduction)
 
+- Docker
+
+## Initializing the project
+
+You need to have Docker Engine installed on your machine.
+You can check by running the following command:
+
+```
+$ docker -v
+Docker version 20.10.7, build f0df350
+```
+
+Then run the following commands to set up your docker container.
+
+```
+docker build -t ecommerce:1.0 .
+docker run -p 3000:3000 ecommerce
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
